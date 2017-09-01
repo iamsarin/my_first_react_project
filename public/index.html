@@ -1,134 +1,40 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>QR-PromptPay Generator</title>
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Trirong">
-    <link rel="stylesheet" href="https://unpkg.com/purecss@1.0.0/build/pure-min.css"
-          integrity="sha384-nn4HPE8lTHyVtfCBi5yW9d20FjT8BJwUXyWZT9InLYax14RDjBj46LmSztkmNP9w" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/7.0.0/normalize.min.css"
-          crossorigin="anonymous">
-    <!--[if lte IE 8]>
-    <link rel="stylesheet" href="dist/css/layouts/side-menu-old-ie.css">
-    <![endif]-->
-    <!--[if gt IE 8]><!-->
-    <link rel="stylesheet" href="dist/css/layouts/side-menu.css">
-    <!--<![endif]-->
-    <script src="../node_modules/qrious/dist/qrious.min.js"></script>
-    <script src="dist/js/index.js"></script>
-    <script
-            src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-            integrity="sha256-k2WSCIexGzOj3Euiig+TlR8gA0EmPjuc79OEeY5L45g="
-            crossorigin="anonymous"></script>
-</head>
-<body>
-<div id="layout">
-    <div id="main">
-        <div class="header">
-            <h1>ตัวสร้าง QR Code สำหรับร้านค้าที่ต้องการจ่ายด้วย PromptPay</h1>
-            <h2>QR-PromptPay Generator</h2>
-        </div>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="theme-color" content="#000000">
+    <!--
+      manifest.json provides metadata used when your web app is added to the
+      homescreen on Android. See https://developers.google.com/web/fundamentals/engage-and-retain/web-app-manifest/
+    -->
+    <link rel="manifest" href="%PUBLIC_URL%/manifest.json">
+    <link rel="shortcut icon" href="%PUBLIC_URL%/favicon.ico">
+    <!--
+      Notice the use of %PUBLIC_URL% in the tags above.
+      It will be replaced with the URL of the `public` folder during the build.
+      Only files inside the `public` folder can be referenced from the HTML.
 
-        <div class="content">
-            <div class="grids-example">
-                <div style="margin-top:10px"></div>
-                <div class="pure-g">
-                    <div class="pure-u-1-2">
-                        <form class="pure-form pure-form-stacked" id="promptpay_form">
-                            <fieldset>
-                                <legend>ข้อมูลการจ่ายเงิน</legend>
+      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
+      work correctly both with client-side routing and a non-root public URL.
+      Learn how to configure a non-root public URL by running `npm run build`.
+    -->
+    <title>React App</title>
+  </head>
+  <body>
+    <noscript>
+      You need to enable JavaScript to run this app.
+    </noscript>
+    <div id="root"></div>
+    <!--
+      This HTML file is a template.
+      If you open it directly in the browser, you will see an empty page.
 
-                                <label for="rad_tel" class="pure-radio">
-                                    <input id="rad_tel" type="radio" name="promptpay_type" value="tel" checked>
-                                    เบอร์โทรศัพท์ Mobile Number
-                                </label>
-                                <label for="rad_citizen_id" class="pure-radio">
-                                    <input id="rad_citizen_id" type="radio" name="promptpay_type" value="citizen">
-                                    เลขบัตรประชาชน CitizenID
-                                </label>
+      You can add webfonts, meta tags, or analytics to this file.
+      The build step will place the bundled scripts into the <body> tag.
 
-                                <span id="promptpay_tel_form">
-                                    <label for="promptpay_tel">Telephone Number</label>
-                                    <input id="promptpay_tel" name="promptpay_tel" placeholder="0898999999">
-                                </span>
-                                <span id="promptpay_citizen_id_form">
-                                    <label for="promptpay_citizen_id">เลขบัตรประชาชน CitizenID</label>
-                                    <input id="promptpay_citizen_id" name="promptpay_citizen_id"
-                                           placeholder="1103322546987">
-                                </span>
-
-                            </fieldset>
-                            <fieldset>
-                                <legend>ข้อมูลอื่นๆ (จะระบุหรือไม่ก็ได้)</legend>
-                                <label for="bath_prince">ราคา (Bath Price)</label>
-                                <input id="bath_prince" name="bath_prince"
-                                       placeholder="590">
-                                <br>
-                                <button type="button" class="pure-button button-success">ศร้าง Create</button>
-                            </fieldset>
-                        </form>
-                    </div>
-
-                    <div class="pure-u-1-2">
-                        <div style="width: 300px;margin: 0 auto">
-                            <img src="dist/image/PromptPay-logo.png" class="pure-img">
-                            <canvas id="qr"></canvas>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<script>
-    var promptpay_tel_element = $('#promptpay_tel_form');
-    var promptpay_citizen_id_element = $('#promptpay_citizen_id_form');
-
-    function togglePromtPayType() {
-        var promptpay_type = $('input[type=radio][name=promptpay_type]:checked', '#promptpay_form').val();
-        if (promptpay_type === 'tel') {
-            promptpay_tel_element.show();
-            promptpay_citizen_id_element.hide();
-        } else if (promptpay_type === 'citizen') {
-            promptpay_tel_element.hide();
-            promptpay_citizen_id_element.show();
-        }
-    }
-
-    function gennerateCode() {
-        var promptpay_type = $('input[type=radio][name=promptpay_type]:checked', '#promptpay_form').val();
-        var first_field = '000201';
-        var qr_type_field = '010211';
-        var merchant_account_information_field = '29370016A000000677010111';
-        var prompt_pay_id_field;
-
-
-        if (promptpay_type === 'tel') {
-            var promptpay_tel = promptpay_tel_element.val();
-            prompt_pay_id_field = '0113' + '0066' + promptpay_tel.substring(1);
-        } else if (promptpay_type === 'citizen') {
-            prompt_pay_id_field = '0213' + promptpay_citizen_id_element.val();
-        }
-
-        var country_field = '5802TH';
-        var currency_field = '5303764';
-        var checksum_field = '6304';
-    }
-
-    $(function () {
-        togglePromtPayType();
-        $('input[type=radio][name=promptpay_type]').change(togglePromtPayType);
-    });
-
-    (function () {
-        var qr = new QRious({
-            element: document.getElementById('qr'),
-            value: 'https://github.com/neocotic/qrious',
-            size: 300
-        });
-    })();
-</script>
-</body>
+      To begin the development, run `npm start` or `yarn start`.
+      To create a production bundle, use `npm run build` or `yarn build`.
+    -->
+  </body>
 </html>
