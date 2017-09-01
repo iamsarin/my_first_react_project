@@ -1,24 +1,109 @@
 .App {
-  text-align: center;
+    text-align: center;
 }
 
 .App-logo {
-  animation: App-logo-spin infinite 20s linear;
-  height: 80px;
+    animation: App-logo-spin infinite 20s linear;
+    height: 80px;
 }
 
 .App-header {
-  background-color: #222;
-  height: 150px;
-  padding: 20px;
-  color: white;
+    background-color: #222;
+    height: 150px;
+    padding: 20px;
+    color: white;
 }
 
 .App-intro {
-  font-size: large;
+    font-size: large;
 }
 
 @keyframes App-logo-spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+    from {
+        transform: rotate(0deg);
+    }
+    to {
+        transform: rotate(360deg);
+    }
+}
+
+table {
+    border-collapse: collapse;
+}
+
+table, td, th {
+    border: 1px solid black;
+}
+
+th {
+    background-color: lightgray;
+    font-size: 20px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.App-myTable {
+    width: 80%;
+    margin: 20px auto 0;
+}
+
+.App-space {
+    height: 50px;
+}
+
+.App-button_success {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.App-button_success:hover {
+    background-color: #429146;
+}
+
+.App-button_default {
+    background-color: #e7e7e7;
+    border: none;
+    color: black;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.App-button_default:hover {
+    background-color: #c7c7c7;
+}
+
+.App-button_danger {
+    background-color: #f44336; /* Green */
+    border: none;
+    color: white;
+    padding: 10px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+
+.App-button_danger:hover {
+    background-color: #ce382e;
+}
+
+.App-input {
+    height: 25px;
+    width: 95%;
+    margin: 0 auto;
 }
