@@ -60,7 +60,7 @@ class App extends Component {
 
         let editBtnElement = controlElement.childNodes[0];
 
-        if (target.innerText === 'Edit') {
+        if (target.innerText === 'Delete') {
             let personTable = !localStorage.getItem('personTable') ? [] : JSON.parse(localStorage.getItem('personTable'));
             personTable = personTable.filter(person => person_id !== parseInt(person.id, 10));
             localStorage.setItem('personTable', JSON.stringify(personTable));
