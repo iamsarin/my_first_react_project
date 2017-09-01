@@ -1,13 +1,16 @@
 import React, {Component} from 'react';
 import './App.css';
 
+import ReactConfirmAlert, {confirmAlert} from 'react-confirm-alert'; // Import
+import 'react-confirm-alert/src/react-confirm-alert.css'; // Import css
+
 class App extends Component {
 
     constructor(props) {
         super(props);
         this.state = {
             name: '',
-            age: 25,
+            age: '',
             nickname: ''
         };
 
@@ -30,6 +33,11 @@ class App extends Component {
     }
 
     handleSave(event) {
+        if (!this.state.name || !this.state.age) {
+            alert('Please fill Name and/or Age');
+            return;
+        }
+
         let personTable = !localStorage.getItem('personTable') ? [] : JSON.parse(localStorage.getItem('personTable'));
         let runningPersonId = !localStorage.getItem('runningPersonId') ? 1 : parseInt(localStorage.getItem('runningPersonId'), 10);
 
@@ -43,7 +51,7 @@ class App extends Component {
 
         this.setState({
             name: '',
-            age: 25,
+            age: '',
             nickname: ''
         });
 
@@ -59,17 +67,29 @@ class App extends Component {
         let controlElement = rowElement[3];
 
         let editBtnElement = controlElement.childNodes[0];
+        let nameElement = rowElement[0];
 
         if (target.innerText === 'Delete') {
-            let personTable = !localStorage.getItem('personTable') ? [] : JSON.parse(localStorage.getItem('personTable'));
-            personTable = personTable.filter(person => person_id !== parseInt(person.id, 10));
-            localStorage.setItem('personTable', JSON.stringify(personTable));
-            this.forceUpdate();
+            let myApp = this;
+            confirmAlert({
+                title: 'Are you sure to delete?',                        // Title dialog
+                message: 'You choose \'' + nameElement.innerText + '\' to delete',               // Message dialog
+                confirmLabel: 'Delete',                           // Text button confirm
+                cancelLabel: 'Cancel',                             // Text button cancel
+                onConfirm: () => {
+                    let personTable = !localStorage.getItem('personTable') ? [] : JSON.parse(localStorage.getItem('personTable'));
+                    personTable = personTable.filter(person => person_id !== parseInt(person.id, 10));
+                    localStorage.setItem('personTable', JSON.stringify(personTable));
+                    myApp.forceUpdate();
+                },    // Action after Confirm
+                onCancel: () => {
+
+                },      // Action after Cancel
+            });
         } else if (target.innerText === 'Not Save') {
             target.innerText = 'Delete';
             editBtnElement.innerText = 'Edit';
 
-            let nameElement = rowElement[0];
             let ageElement = rowElement[1];
             let nicknameElement = rowElement[2];
 
@@ -82,7 +102,7 @@ class App extends Component {
     handleClear(event) {
         this.setState({
             name: '',
-            age: 25,
+            age: '',
             nickname: ''
         });
     }
@@ -185,7 +205,7 @@ class App extends Component {
                                        onChange={this.handleInputChange} name="nickname"/>
                             </td>
                             <td>
-                                <button type="button" className="App-button_success" onClick={this.handleSave}>Save
+                                <button type="button" className="App-button_success" onClick={this.handleSave}>Add
                                 </button>
                                 <button type="button" className="App-button_default" onClick={this.handleClear}>Cancel
                                 </button>
