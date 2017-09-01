@@ -1,0 +1,30 @@
+{
+  "name": "qr-promptpay",
+  "version": "1.0.0",
+  "description": "QR-PromptPay Code Generator",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/hezagon/qr-promtpay.git"
+  },
+  "keywords": [
+    "qr",
+    "promptpay",
+    "hezagon",
+    "thailand",
+    "payment"
+  ],
+  "author": "Hezagon By SarinDev <hezagon6@gmail.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/hezagon/qr-promtpay/issues"
+  },
+  "homepage": "https://gitlab.com/hezagon/qr-promtpay#README",
+  "dependencies": {
+    "js-crc": "^0.2.0",
+    "qrious": "^4.0.2"
+  }
+}
